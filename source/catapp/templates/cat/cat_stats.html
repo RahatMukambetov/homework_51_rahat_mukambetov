@@ -1,0 +1,50 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Информация о коте</title>
+    <style>
+        .container {
+            display: flex;
+            align-items: center;
+        }
+
+        .avatar {
+            width: 200px;
+            margin-right: 20px;
+        }
+
+        .info {
+            flex-grow: 1;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img class="avatar" src="{% static cat.get_avatar_path %}" alt="Кот">
+        <div class="info">
+            <h1>{{ cat.name }}</h1>
+            <p>Возраст: {{ cat.age }}</p>
+            <p>Уровень сытости: {{ cat.hunger_level }}</p>
+            <p>Уровень счастья: {{ cat.happiness_level }}</p>
+        </div>
+    </div>
+
+    <form method="post" action="{% url 'cat_stats' %}">
+        {% csrf_token %}
+        <select id="action" name="action" required>
+            <option value="feed">Покормить кота</option>
+            <option value="play">Поиграть с котом</option>
+            <option value="sleep">Уложить спать кота</option>
+        </select>
+        <br>
+        <button type="submit">Подтвердить</button>
+    </form>
+</body>
+</html>
+
